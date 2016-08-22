@@ -5,6 +5,7 @@ Changelog
 -------------------------
 
 * Add missing db_index attributes to models
+* Add grey literature models
 
 0.2.6
 -----
