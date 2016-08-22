@@ -9,15 +9,13 @@ faker = Factory.create()
 
 
 class OrganisationFactory(factory.django.DjangoModelFactory):
+    name = factory.Sequence(lambda n: 'organization{}'.format(n))
 
     class Meta:
         model = 'erudit.Organisation'
 
-    name = factory.Sequence(lambda n: 'organization{}'.format(n))
-
 
 class PublisherFactory(factory.django.DjangoModelFactory):
-
     class Meta:
         model = 'erudit.Publisher'
 
@@ -39,13 +37,12 @@ class DisciplineFactory(factory.django.DjangoModelFactory):
 
 
 class JournalFactory(factory.django.DjangoModelFactory):
-
-    class Meta:
-        model = 'erudit.journal'
-
     code = factory.Sequence(lambda n: 'journal-{}'.format(n))
     name = factory.Sequence(lambda n: 'Revue{}'.format(n))
     localidentifier = factory.Sequence(lambda n: 'journal{}'.format(n))
+
+    class Meta:
+        model = 'erudit.journal'
 
     @factory.post_generation
     def publishers(self, create, extracted, **kwargs):
@@ -72,25 +69,23 @@ class JournalInformationFactory(factory.django.DjangoModelFactory):
 
 
 class IssueFactory(factory.django.DjangoModelFactory):
-
-    class Meta:
-        model = 'erudit.issue'
-
     journal = factory.SubFactory(JournalFactory)
     localidentifier = factory.Sequence(lambda n: 'issue{}'.format(n))
     date_published = dt.datetime.now().date()
     year = dt.datetime.now().year
 
+    class Meta:
+        model = 'erudit.issue'
+
 
 class ArticleFactory(factory.django.DjangoModelFactory):
-
-    class Meta:
-        model = 'erudit.article'
-
     issue = factory.SubFactory(IssueFactory)
     localidentifier = factory.Sequence(lambda n: 'article{}'.format(n))
     type = 'article'
     ordseq = 0
+
+    class Meta:
+        model = 'erudit.article'
 
 
 class AuthorFactory(factory.django.DjangoModelFactory):
@@ -110,3 +105,33 @@ class ThesisFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = 'erudit.Thesis'
+
+
+class SearchUnitFactory(factory.django.DjangoModelFactory):
+    collection = factory.SubFactory(CollectionFactory)
+    code = factory.Sequence(lambda n: 'journal-{}'.format(n))
+    localidentifier = factory.Sequence(lambda n: 'journal-{}'.format(n))
+    name = factory.Sequence(lambda n: 'Unité de recherche {}'.format(n))
+
+    class Meta:
+        model = 'erudit.SearchUnit'
+
+
+class SearchUnitCollectionFactory(factory.django.DjangoModelFactory):
+    search_unit = factory.SubFactory(SearchUnitFactory)
+    localidentifier = factory.Sequence(lambda n: 'collection-{}'.format(n))
+    title = factory.Sequence(lambda n: 'Collection {}'.format(n))
+
+    class Meta:
+        model = 'erudit.SearchUnitCollection'
+
+
+class SearchUnitDocumentFactory(factory.django.DjangoModelFactory):
+    collection = factory.SubFactory(SearchUnitCollectionFactory)
+    localidentifier = factory.Sequence(lambda n: 'document-{}'.format(n))
+    title = factory.Sequence(lambda n: 'Document {}'.format(n))
+    abstract = factory.Sequence(lambda n: 'Abstract {}'.format(n))
+    publication_year = faker.year()
+
+    class Meta:
+        model = 'erudit.SearchUnitDocument'

@@ -16,6 +16,9 @@ from erudit.test.factories import AuthorFactory
 from erudit.test.factories import IssueFactory
 from erudit.test.factories import JournalFactory
 from erudit.test.factories import JournalTypeFactory
+from erudit.test.factories import SearchUnitFactory
+from erudit.test.factories import SearchUnitCollectionFactory
+from erudit.test.factories import SearchUnitDocumentFactory
 
 
 class TestJournal(BaseEruditTestCase):
@@ -357,3 +360,18 @@ class TestAuthor(BaseEruditTestCase):
         self.assertEqual(author_1.letter_prefix, 'A')
         self.assertEqual(author_2.letter_prefix, 'D')
         self.assertEqual(author_3.letter_prefix, 'G')
+
+
+class TestSearchUnit(BaseEruditTestCase):
+    def test_can_return_the_total_count_of_its_documents(self):
+        # Setup
+        search_unit_1 = SearchUnitFactory.create(collection=self.collection)
+        search_unit_2 = SearchUnitFactory.create(collection=self.collection)
+        search_unit_collection_1 = SearchUnitCollectionFactory.create(search_unit=search_unit_1)
+        search_unit_collection_2 = SearchUnitCollectionFactory.create(search_unit=search_unit_2)
+        SearchUnitDocumentFactory(collection=search_unit_collection_1)
+        SearchUnitDocumentFactory(collection=search_unit_collection_1)
+        SearchUnitDocumentFactory(collection=search_unit_collection_2)
+        # Run & check
+        self.assertEqual(search_unit_1.documents_count, 2)
+        self.assertEqual(search_unit_2.documents_count, 1)

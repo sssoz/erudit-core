@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
+from django.utils.functional import cached_property
 from django.utils.translation import ugettext_lazy as _
 
 from ..abstract_models import FedoraDated
@@ -50,6 +51,10 @@ class SearchUnit(FedoraMixin, FedoraDated):
 
     def __str__(self):
         return '{:s} [{:s}]'.format(self.name, self.code)
+
+    @cached_property
+    def documents_count(self):
+        return SearchUnitDocument.objects.filter(collection__search_unit_id=self.id).count()
 
 
 class SearchUnitCollection(FedoraMixin, FedoraDated):
