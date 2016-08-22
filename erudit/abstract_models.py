@@ -12,10 +12,10 @@ class FedoraDated(models.Model):
     be set manually.
     """
     fedora_created = models.DateTimeField(
-        verbose_name=_('Date de création sur Fedora'), blank=True, null=True)
+        verbose_name=_('Date de création sur Fedora'), editable=False, blank=True, null=True)
 
     fedora_updated = models.DateTimeField(
-        verbose_name=_('Date de modification sur Fedora'), blank=True, null=True)
+        verbose_name=_('Date de modification sur Fedora'), editable=False, blank=True, null=True)
 
     class Meta:
         abstract = True
@@ -27,7 +27,8 @@ class OAIDated(models.Model):
     Note that these fields do not used the auto_now_add/auto_now attributes. So these values should
     be set manually.
     """
-    oai_datestamp = models.DateTimeField(verbose_name=_('Datestamp OAI'), blank=True, null=True)
+    oai_datestamp = models.DateTimeField(
+        verbose_name=_('Datestamp OAI'), editable=False, blank=True, null=True)
 
     class Meta:
         abstract = True
