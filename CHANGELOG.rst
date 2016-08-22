@@ -1,6 +1,11 @@
 Changelog
 #########
 
+0.2.7 - Under development
+-------------------------
+
+* Add missing db_index attributes to models
+
 0.2.6
 -----
 

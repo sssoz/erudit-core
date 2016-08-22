@@ -60,10 +60,10 @@ class Collection(models.Model):
     name = models.CharField(max_length=200)
     """ The name of the collection """
 
-    code = models.CharField(max_length=10, unique=True)
+    code = models.CharField(max_length=10, unique=True, db_index=True)
     """ The code of the collection. It should be unique. """
 
-    localidentifier = models.CharField(max_length=10, blank=True, null=True)
+    localidentifier = models.CharField(max_length=10, db_index=True, blank=True, null=True)
     """ The localidentifier of the collection. There should be a correspondence between the
     code of the collection and the ``Fonds_fac`` field in Solr. """
 

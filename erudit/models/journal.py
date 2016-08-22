@@ -49,7 +49,8 @@ class JournalType(models.Model):
         (CODE_CULTURAL, _('Culturel')),
         (CODE_SCIENTIFIC, _('Savant')),
     )
-    code = models.SlugField(verbose_name=_('Code'), max_length=2, choices=CODE_CHOICES, unique=True)
+    code = models.SlugField(
+        verbose_name=_('Code'), max_length=2, choices=CODE_CHOICES, unique=True, db_index=True)
 
     class Meta:
         verbose_name = _('Type de revue')
@@ -79,7 +80,7 @@ class Journal(FedoraMixin, FedoraDated, OAIDated):
     """ The ``name`` of the journal """
 
     code = models.SlugField(
-        max_length=255, unique=True, verbose_name=_('Code'),
+        max_length=255, unique=True, db_index=True, verbose_name=_('Code'),
         help_text=_('Identifiant unique (utilisé dans URL Érudit)'))
     """ The shortname of the journal """
 
@@ -94,7 +95,8 @@ class Journal(FedoraMixin, FedoraDated, OAIDated):
     """ The subtitle of the journal """
 
     localidentifier = models.CharField(
-        max_length=100, unique=True, blank=True, null=True, verbose_name=_('Identifiant Fedora'))
+        max_length=100, unique=True, db_index=True, blank=True, null=True,
+        verbose_name=_('Identifiant Fedora'))
     """ Fedora commons identifier. Used to implement the
     :py:class:`FedoraMixin <erudit.fedora.modelmixins.FedoraMixin>` model mixin. """
 
@@ -313,7 +315,7 @@ class Issue(FedoraMixin, FedoraDated, OAIDated):
     """ The copyrights of the issue """
 
     localidentifier = models.CharField(
-        max_length=100, unique=True, verbose_name=_('Identifiant Fedora'))
+        max_length=100, unique=True, db_index=True, verbose_name=_('Identifiant Fedora'))
     """ The ``Fedora`` identifier of an issue """
 
     objects = models.Manager()
