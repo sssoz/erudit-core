@@ -384,3 +384,18 @@ class TestSearchUnit(BaseEruditTestCase):
         # Run & check
         self.assertEqual(search_unit_1.publication_period, '1966 - 2016')
         self.assertIsNone(search_unit_2.publication_period)
+
+
+class TestSearchUnitCollection(BaseEruditTestCase):
+    def test_can_return_the_total_count_of_its_documents(self):
+        # Setup
+        search_unit_1 = SearchUnitFactory.create(collection=self.collection)
+        search_unit_2 = SearchUnitFactory.create(collection=self.collection)
+        search_unit_collection_1 = SearchUnitCollectionFactory.create(search_unit=search_unit_1)
+        search_unit_collection_2 = SearchUnitCollectionFactory.create(search_unit=search_unit_2)
+        SearchUnitDocumentFactory(collection=search_unit_collection_1)
+        SearchUnitDocumentFactory(collection=search_unit_collection_1)
+        SearchUnitDocumentFactory(collection=search_unit_collection_2)
+        # Run & check
+        self.assertEqual(search_unit_collection_1.documents_count, 2)
+        self.assertEqual(search_unit_collection_2.documents_count, 1)

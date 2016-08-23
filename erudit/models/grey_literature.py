@@ -93,6 +93,11 @@ class SearchUnitCollection(FedoraMixin, FedoraDated):
     def __str__(self):
         return self.title
 
+    @cached_property
+    def documents_count(self):
+        """ Returns the total number of documents of the search unit. """
+        return self.documents.all().count()
+
 
 class SearchUnitDocument(EruditDocument, FedoraMixin, FedoraDated):
     """ A simple search unit document. """
