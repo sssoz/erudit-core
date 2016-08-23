@@ -44,6 +44,9 @@ class SearchUnit(FedoraMixin, FedoraDated):
         verbose_name=_('Dernière année de publication'), blank=True, null=True)
     """ The last year when a document of this search unit has been published. """
 
+    website_url = models.URLField(verbose_name=_('Site web'), blank=True, null=True)
+    """ The website URL of the search unit if any. """
+
     class Meta:
         ordering = ('name', )
         verbose_name = _('Unité de recherche')
