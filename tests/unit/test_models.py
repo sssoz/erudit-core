@@ -375,3 +375,12 @@ class TestSearchUnit(BaseEruditTestCase):
         # Run & check
         self.assertEqual(search_unit_1.documents_count, 2)
         self.assertEqual(search_unit_2.documents_count, 1)
+
+    def test_can_return_its_publication_period(self):
+        # Setup
+        search_unit_1 = SearchUnitFactory.create(
+            collection=self.collection, first_publication_year=1966, last_publication_year=2016)
+        search_unit_2 = SearchUnitFactory.create(collection=self.collection)
+        # Run & check
+        self.assertEqual(search_unit_1.publication_period, '1966 - 2016')
+        self.assertIsNone(search_unit_2.publication_period)

@@ -54,7 +54,15 @@ class SearchUnit(FedoraMixin, FedoraDated):
 
     @cached_property
     def documents_count(self):
+        """ Returns the total number of documents of the search unit. """
         return SearchUnitDocument.objects.filter(collection__search_unit_id=self.id).count()
+
+    @cached_property
+    def publication_period(self):
+        """ Returns the publication period of the search unit. """
+        if self.first_publication_year and self.last_publication_year:
+            return '{first} - {last}'.format(
+                first=self.first_publication_year, last=self.last_publication_year)
 
 
 class SearchUnitCollection(FedoraMixin, FedoraDated):
