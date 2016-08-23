@@ -47,6 +47,10 @@ class SearchUnit(FedoraMixin, FedoraDated):
     website_url = models.URLField(verbose_name=_('Site web'), blank=True, null=True)
     """ The website URL of the search unit if any. """
 
+    logo = models.ImageField(
+        verbose_name=_('Logo'), upload_to='search_unit_logos', blank=True, null=True)
+    """ The logo that can be associated with the search unit. """
+
     class Meta:
         ordering = ('name', )
         verbose_name = _('Unité de recherche')
