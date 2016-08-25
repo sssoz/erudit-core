@@ -10,6 +10,7 @@ from ..fedora.modelmixins import FedoraMixin
 from .core import Author
 from .core import Collection
 from .core import EruditDocument
+from .core import Publisher
 
 
 class SearchUnit(FedoraMixin, FedoraDated):
@@ -121,6 +122,9 @@ class SearchUnitDocument(EruditDocument, FedoraMixin, FedoraDated):
 
     authors = models.ManyToManyField(Author, verbose_name=_('Auteurs'))
     """ A document can have many authors. """
+
+    publisher = models.ForeignKey(Publisher, verbose_name=_('Éditeur'), blank=True, null=True)
+    """ The publisher of the document. """
 
     description_url = models.URLField(
         verbose_name=_('URL vers la description'), blank=True, null=True)

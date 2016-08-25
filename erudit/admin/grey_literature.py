@@ -28,7 +28,7 @@ class SearchUnitDocumentAdmin(admin.ModelAdmin):
     inlines = (SearchUnitDocumentAttachmentInline, )
     list_display = ('__str__', 'localidentifier', 'collection', )
     list_display_links = ('__str__', 'localidentifier', )
-    raw_id_fields = ('collection', 'authors', )
+    raw_id_fields = ('collection', 'authors', 'publisher', )
 
 
 class SearchUnitDocumentAttachmentAdmin(admin.ModelAdmin):

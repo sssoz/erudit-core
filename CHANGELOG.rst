@@ -1,6 +1,11 @@
 Changelog
 #########
 
+0.2.8 - Under development
+-------------------------
+
+* Add a ``publisher`` foreign key on the SearchUnitDocument model
+
 0.2.7
 -----
 
