@@ -1,8 +1,8 @@
 Changelog
 #########
 
-0.2.7 - Under development
--------------------------
+0.2.7
+-----
 
 * Add missing db_index attributes to models
 * Add grey literature models
