@@ -2,6 +2,7 @@
 
 from django.contrib import admin
 from modeltranslation.admin import TranslationAdmin
+from django.utils.translation import gettext as _
 
 from ..models import Article
 from ..models import ArticleAbstract
@@ -93,6 +94,17 @@ class IssueAdmin(admin.ModelAdmin):
     list_display = ('journal', 'year', 'volume', 'number', 'title', 'localidentifier', )
     search_fields = ('id', 'localidentifier', )
     list_filter = ('is_published', 'journal__collection', )
+    actions = ['make_published', 'make_unpublished', ]
+
+    def make_published(self, request, queryset):
+        """Mark a set of issues as published"""
+        queryset.update(is_published=True)
+    make_published.short_description = _("Marquer les numéros sélectionnés comme diffusés")
+
+    def make_unpublished(self, request, queryset):
+        """Mark a set of issues as pre-published"""
+        queryset.update(is_published=False)
+    make_unpublished.short_description = _("Marquer les numéros sélectionnés comme pré-diffusés")
 
 
 class ArticleAbstractAdmin(admin.ModelAdmin):

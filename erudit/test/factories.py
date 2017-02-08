@@ -45,6 +45,7 @@ class JournalFactory(factory.django.DjangoModelFactory):
     name = factory.Sequence(lambda n: 'Revue{}'.format(n))
     localidentifier = factory.Sequence(lambda n: 'journal{}'.format(n))
     redirect_to_external_url = False
+    last_publication_year = dt.datetime.now().year
 
     class Meta:
         model = 'erudit.journal'
@@ -148,6 +149,7 @@ class ThesisFactory(factory.django.DjangoModelFactory):
     title = factory.Sequence(lambda n: 'Thèse {}'.format(n))
     url = faker.url()
     publication_year = faker.year()
+    localidentifier = factory.Sequence(lambda n: 'thesis-{}'.format(n))
 
     class Meta:
         model = 'erudit.Thesis'

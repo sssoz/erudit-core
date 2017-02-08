@@ -493,8 +493,7 @@ class Issue(FedoraMixin, FedoraDated, OAIDated):
         if not self.journal.open_access and self.journal.collection.code == 'erudit':
             publication_year = self.year
             year_offset = self.journal.embargo_in_years
-            return True if self.journal.last_publication_year < publication_year + year_offset \
-                else False
+            return self.journal.last_publication_year < publication_year + year_offset
         return False
 
     @property
@@ -607,9 +606,6 @@ class Article(EruditDocument, FedoraMixin, FedoraDated, OAIDated):
 
     surtitle = models.CharField(max_length=600, null=True, blank=True)
     """ The surtitle of the article """
-
-    bibliographic_reference = models.CharField(max_length=600, null=True, blank=True)
-    """ Bibliographic reference of this article """
 
     html_title = models.CharField(max_length=800, null=True, blank=True)
     """ The title of the article (HTML) """
